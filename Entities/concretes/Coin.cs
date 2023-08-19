@@ -8,6 +8,6 @@ namespace Entities.concretes
         [Key]
         public int Id { get; set; }
         public String Name { get; set; }
-        public double Value { get; set; }
+        public double Value { get; set; }//this will be change in the future.
     }
 }
