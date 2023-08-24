@@ -4,5 +4,7 @@
     {
         Task<double> GetCoinValueFromApi(string coinName);
 
+        void UpdateAlltheCoins();
+
     }
 }

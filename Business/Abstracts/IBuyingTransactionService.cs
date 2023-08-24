@@ -9,5 +9,6 @@ namespace Business.Abstracts
         BuyingTransaction GetById(int id);
         void Update(int id, double quantity);
         void Delete(int id);
+        List<BuyingTransaction> GetAllForSpecificUser(int id);
     }
 }

@@ -20,10 +20,11 @@ namespace Business.Concretes
         public async Task<double> GetCoinValueFromApi(string coinName)
         {
             Coin coin = new Coin();
-            List<Coin> coins = _coinDal.GetList().ToList();
             try
             {
-                using (HttpClient httpClient = new HttpClient())
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                using (HttpClient httpClient = new HttpClient(clientHandler))
                 {
                     string apiUrl = $"https://api.coingecko.com/api/v3/simple/price?ids={coinName}&vs_currencies=usd";
 
@@ -37,9 +38,9 @@ namespace Business.Concretes
                         if (apiResponse.ContainsKey(coinName))
                         {
                             double coinValue = (double)apiResponse[coinName]["usd"];
-                            // coin = _coinDal.GetList().Where(p => p.Name.Equals(coinName)).Single();
-                            //coin.Value= coinValue;
-                            //_coinDal.Update(coin);
+                             coin = _coinDal.GetList().Where(p => p.Name.Equals(coinName)).Single();
+                            coin.Value= coinValue;
+                            _coinDal.Update(coin);
                             return coinValue;
                         }
                     }
@@ -57,6 +58,13 @@ namespace Business.Concretes
             return coin.Value; 
         }
 
+        public void UpdateAlltheCoins()
+        {
+            foreach (var coin in _coinDal.GetList().ToArray())
+            {
+                GetCoinValueFromApi(coin.Name);
+            }
+        }
     }
    
 

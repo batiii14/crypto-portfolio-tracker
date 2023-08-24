@@ -5,5 +5,7 @@ namespace DataAccess.Abstracts
 {
     public interface IBuyingTransactionDal : IEntityRepository<BuyingTransaction>
     {
+        List<BuyingTransaction> GetBuyingTransactionWithCoin();
+
     }
 }

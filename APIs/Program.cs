@@ -1,5 +1,7 @@
+using APIs;
 using Business.Abstracts;
 using Business.Concretes;
+using Business.Profitchecker;
 using DataAccess.Abstracts;
 using DataAccess.Concretes;
 using Entities.concretes;
@@ -10,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+//builder.Services.AddHostedService<BackgroundTaskService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -27,6 +30,9 @@ builder.Services.AddScoped<ICoinUpdaterService, CoinUpdaterManager>();
 builder.Services.AddScoped<ICoinUpdaterDal, CoinUpdaterDal>();
 builder.Services.AddScoped<ICoinsBoughtService,CoinsBoughtManager>();
 builder.Services.AddScoped<ICoinsBoughtDal,CoinsBoughtDal>();
+builder.Services.AddScoped<ProfitChecker, ProfitChecker>();
+builder.Services.AddScoped<ProfitForPortfolio, ProfitForPortfolio>();
+
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
 

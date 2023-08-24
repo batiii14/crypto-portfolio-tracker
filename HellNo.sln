@@ -5,15 +5,17 @@ VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HellNo", "HellNo\HellNo.csproj", "{7CE8CDC0-2487-4F68-BC21-F288791A9D1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{1586BD0F-2DBE-492A-80CE-F7FB8E5EEC25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccess", "DataAccess\DataAccess.csproj", "{1586BD0F-2DBE-492A-80CE-F7FB8E5EEC25}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{270FD976-F4B3-4954-B0AE-C7C73B2557BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{270FD976-F4B3-4954-B0AE-C7C73B2557BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{8A2414EC-9AB5-4AAB-8523-F2577F42DE26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Business.csproj", "{8A2414EC-9AB5-4AAB-8523-F2577F42DE26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{7BD06753-C984-4FAC-9BB5-80D34A0984AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{7BD06753-C984-4FAC-9BB5-80D34A0984AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIs", "APIs\APIs.csproj", "{AB03F766-357B-4591-9AB7-E7B7F4874ECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIs", "APIs\APIs.csproj", "{AB03F766-357B-4591-9AB7-E7B7F4874ECD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoinBackgroundUpdaterService", "CoinBackgroundUpdaterService\CoinBackgroundUpdaterService.csproj", "{DC376221-00E3-42E4-A9EC-CC5D39A3483C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AB03F766-357B-4591-9AB7-E7B7F4874ECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB03F766-357B-4591-9AB7-E7B7F4874ECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB03F766-357B-4591-9AB7-E7B7F4874ECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC376221-00E3-42E4-A9EC-CC5D39A3483C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC376221-00E3-42E4-A9EC-CC5D39A3483C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC376221-00E3-42E4-A9EC-CC5D39A3483C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC376221-00E3-42E4-A9EC-CC5D39A3483C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

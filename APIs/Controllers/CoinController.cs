@@ -24,8 +24,14 @@ namespace APIs.Controllers
             return Ok(coin);
             
         }
-        [HttpGet]
+        [HttpGet("getById")]
         public ActionResult GetCoins(int id)
+        {
+            var coins = _coinService.GetAllCoin().Where(p=>p.Id==id);
+            return Ok(coins);
+        }
+        [HttpGet("getAll")]
+        public ActionResult GetAllCoins()
         {
             var coins = _coinService.GetAllCoin().ToList();
             return Ok(coins);

@@ -1,12 +1,8 @@
 ﻿using Business.Abstracts;
 using Business.Dtos.requests.walletRequests;
-using Business.Dtos.responses.userResponses;
 using DataAccess.Abstracts;
-using DataAccess.Concretes;
 using Entities.concretes;
-using Microsoft.IdentityModel.Tokens;
-using System.Linq.Expressions;
-
+using Business.Profitchecker;
 namespace Business.Concretes
 {
     public class BuyingTransactionManager : IBuyingTransactionService
@@ -34,10 +30,10 @@ namespace Business.Concretes
 
 
 
-           bool ısUserExist=_userDal.IsUserExist(buyingTransaction.UserId);
+            bool ısUserExist = _userDal.IsUserExist(buyingTransaction.UserId);
             User user = new User();
             user = _userDal.GetWithWallet(buyingTransaction.UserId);
-            bool isWalletExist=_walletManager.IsWalletExist(user.Wallet.WalletId);
+            bool isWalletExist = _walletManager.IsWalletExist(user.Wallet.WalletId);
             Wallet usersWallet = user.Wallet;
             try
             {
@@ -155,7 +151,15 @@ namespace Business.Concretes
 
         public List<BuyingTransaction> GetAll()
         {
-            return _buyingTransactionDal.GetList().ToList();
+            return _buyingTransactionDal.GetBuyingTransactionWithCoin();
+
+        }
+        public List<BuyingTransaction> GetAllForSpecificUser(int id)
+        {
+
+            return _buyingTransactionDal.GetBuyingTransactionWithCoin().Where(p=>p.UserId == id).ToList();
+            
+
         }
 
         public BuyingTransaction GetById(int id)
