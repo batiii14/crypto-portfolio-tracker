@@ -20,7 +20,7 @@ namespace APIs.Controllers
         public IActionResult Get([FromRoute] int id)
         {
 
-            return Ok(_walletService.getWalletWithUserId(id));
+            return Ok(_walletService.GetWalletWithUserId(id));
         }
 
 
@@ -28,7 +28,7 @@ namespace APIs.Controllers
         public IActionResult GetAll()
         {
 
-            return Ok(_walletService.getWallet());
+            return Ok(_walletService.GetWallet());
         }   
 
         [HttpPost("add")]

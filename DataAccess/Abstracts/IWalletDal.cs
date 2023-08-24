@@ -7,6 +7,6 @@ namespace DataAccess.Abstracts
     {
         Wallet GetWalletWithUser();
         Wallet GetWalletWithUserId(int id);
-
+        Boolean IsWalletExist(int id);
     }
 }

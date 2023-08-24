@@ -7,5 +7,6 @@ namespace DataAccess.Abstracts
     {
         List<User> GetAllWithWallet();
         User GetWithWallet(int id);
+        Boolean IsUserExist(int id);
     }
 }

@@ -25,6 +25,8 @@ builder.Services.AddScoped<IWalletService, WalletManager>();
 builder.Services.AddScoped<IWalletDal, WalletDal>();
 builder.Services.AddScoped<ICoinUpdaterService, CoinUpdaterManager>();
 builder.Services.AddScoped<ICoinUpdaterDal, CoinUpdaterDal>();
+builder.Services.AddScoped<ICoinsBoughtService,CoinsBoughtManager>();
+builder.Services.AddScoped<ICoinsBoughtDal,CoinsBoughtDal>();
 
 builder.Services.AddCors(opt => opt.AddDefaultPolicy(p => { p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); }));
 

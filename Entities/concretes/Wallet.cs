@@ -12,7 +12,7 @@ namespace Entities.concretes
         [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }
-        public List<Coin>? CoinList { get; set; } = new List<Coin>();
+        public List<CoinsBought>? CoinList { get; set; } = new List<CoinsBought>();
 
     }
 }

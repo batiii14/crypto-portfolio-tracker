@@ -5,10 +5,11 @@ namespace Business.Abstracts
 {
     public interface IWalletService 
     {
-        GetWalletWithUserIdResponse getWalletWithUserId(int id);
-        GetWalletWithUserResponse getWallet();
-        void update(UpdateWalletRequest request);
+        GetWalletWithUserIdResponse GetWalletWithUserId(int id);
+        GetWalletWithUserResponse GetWallet();
+        void Update(UpdateWalletRequest request);
         void Add(CreateWalletRequest request);
         void Delete(DeleteWalletRequest request);
+        Boolean IsWalletExist(int id);
     }
 }

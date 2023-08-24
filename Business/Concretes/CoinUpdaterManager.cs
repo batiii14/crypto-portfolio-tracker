@@ -37,9 +37,9 @@ namespace Business.Concretes
                         if (apiResponse.ContainsKey(coinName))
                         {
                             double coinValue = (double)apiResponse[coinName]["usd"];
-                             coin = _coinDal.GetList().Where(p => p.Name.Equals(coinName)).Single();
-                            coin.Value= coinValue;
-                            _coinDal.Update(coin);
+                            // coin = _coinDal.GetList().Where(p => p.Name.Equals(coinName)).Single();
+                            //coin.Value= coinValue;
+                            //_coinDal.Update(coin);
                             return coinValue;
                         }
                     }

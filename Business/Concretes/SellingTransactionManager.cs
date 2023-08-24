@@ -12,30 +12,35 @@ namespace Business.Concretes
         {
             _sellTransactionDal = sellTransactionDal;
         }
-        public void Add(SellingTransaction entity)
+        public void AddSellingTransaction(SellingTransaction entity)
         {
             _sellTransactionDal.Add(entity);
 
         }
 
-        public void Delete(SellingTransaction entity)
+        public void Delete(int id)
+            
         {
-            _sellTransactionDal.Delete(entity);
+            SellingTransaction sl= _sellTransactionDal.Get(p => p.Id == id);
+            _sellTransactionDal.Delete(sl);
         }
 
-        public SellingTransaction Get(Expression<Func<SellingTransaction, bool>> filter)
+        public SellingTransaction GetById(int id)
         {
-            return _sellTransactionDal.Get(filter);
+            return _sellTransactionDal.Get(p=>p.Id==id);
         }
 
-        public IList<SellingTransaction> GetList(Expression<Func<SellingTransaction, bool>> filter = null)
+        public List<SellingTransaction> GetAll()
         {
-            return _sellTransactionDal.GetList(filter).ToList();
+            return _sellTransactionDal.GetList().ToList();
         }
 
-        public void Update(SellingTransaction entity)
+        public void Update(int id,double quantity)
         {
-            _sellTransactionDal.Update(entity);
+            SellingTransaction sl= _sellTransactionDal.Get(p => p.Id == id);
+            sl.Quantity = quantity;
+            
+            _sellTransactionDal.Update(sl);
         }
     }
 }

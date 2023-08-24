@@ -6,6 +6,6 @@ namespace Business.Dtos.responses.walletResponses
     {
         public int WalletId { get; set; }
         public int UserId { get; set; }
-        public List<Coin>? CoinList { get; set; } = new List<Coin>();
+        public List<CoinsBought>? CoinList { get; set; } = new List<CoinsBought>();
     }
 }

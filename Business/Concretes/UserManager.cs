@@ -1,6 +1,7 @@
 ﻿using Business.Abstracts;
 using Business.Dtos.requests.userRequests;
 using Business.Dtos.responses.userResponses;
+using Business.Dtos.responses.walletResponses;
 using DataAccess.Abstracts;
 using Entities.concretes;
 
@@ -40,9 +41,12 @@ namespace Business.Concretes
         {
             List<User> users= _userDal.GetAllWithWallet().ToList();
             
+            GetWalletWithUserResponse getWalletWithUserResponse=new GetWalletWithUserResponse();
+            
             List<GetAllUserResponse> getAllUserResponses = new List<GetAllUserResponse>();
             foreach (User user in users)
             {
+                
                 GetAllUserResponse getAllUserResponse = new GetAllUserResponse();
                 getAllUserResponse.UserId = user.UserId;
                 getAllUserResponse.Email = user.Email;
@@ -50,8 +54,20 @@ namespace Business.Concretes
                 getAllUserResponse.LastName = user.LastName;
                 getAllUserResponse.UserName= user.UserName;
                 getAllUserResponse.Password= user.Password;
-                getAllUserResponse.Wallet = user.Wallet;
-                
+                if (user.Wallet != null)
+                {
+                    getWalletWithUserResponse.WalletId = user.Wallet.WalletId;
+                    getWalletWithUserResponse.UserId = user.UserId;
+                    getWalletWithUserResponse.CoinList = user.Wallet.CoinList;
+                    getAllUserResponse.Wallet = getWalletWithUserResponse;
+
+                }
+                else
+                {
+                    getAllUserResponse.Wallet = null;
+
+                }
+
                 getAllUserResponses.Add(getAllUserResponse);
 
             }
@@ -77,7 +93,9 @@ namespace Business.Concretes
 
         public void update(UpdateUserRequest updateUserRequest)
         {
-            throw new NotImplementedException();
+            User user = _userDal.Get(p => p.UserId == updateUserRequest.UserId);
+            user.UserName = updateUserRequest.UserName;
+            _userDal.Update(user);
         }
     }
 }

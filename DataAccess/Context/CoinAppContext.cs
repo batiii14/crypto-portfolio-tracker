@@ -28,5 +28,6 @@ namespace DataAccess.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
         public DbSet<CoinUpdater> CoinUpdaters { get; set; }
+        public DbSet<CoinsBought> coinsBoughts { get; set; }
     }
 }

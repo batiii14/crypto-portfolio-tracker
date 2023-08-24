@@ -30,7 +30,7 @@ namespace Business.Concretes
             _walletDal.Delete(wallet);
         }
 
-        public GetWalletWithUserResponse getWallet()
+        public GetWalletWithUserResponse GetWallet()
         {
             Wallet wallet = _walletDal.GetWalletWithUser();
             GetWalletWithUserResponse getUserResponse = new GetWalletWithUserResponse();
@@ -42,9 +42,9 @@ namespace Business.Concretes
 
         }
 
-        public GetWalletWithUserIdResponse getWalletWithUserId(int id)
+        public GetWalletWithUserIdResponse GetWalletWithUserId(int id)
         {
-            Wallet wallet = _walletDal.Get(p => p.UserId == id);
+            Wallet wallet = _walletDal.GetWalletWithUserId(id);
             GetWalletWithUserIdResponse getUserResponse = new GetWalletWithUserIdResponse();
             getUserResponse.UserId = wallet.UserId;
             getUserResponse.WalletId = wallet.WalletId;
@@ -52,11 +52,18 @@ namespace Business.Concretes
             return getUserResponse;
         }
 
-        public void update(UpdateWalletRequest request)
+        public void Update(UpdateWalletRequest request)
         {
             Wallet wallet =_walletDal.Get(p=>p.WalletId == request.WalletId);
-            wallet.CoinList = wallet.CoinList;
+            wallet = _walletDal.GetWalletWithUser();
+            wallet.CoinList = request.coins;
+            _walletDal.Update(wallet);
 
+        }
+
+        public Boolean IsWalletExist(int id)
+        {
+            return _walletDal.IsWalletExist(id);
         }
     }
 }

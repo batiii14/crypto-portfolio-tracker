@@ -1,4 +1,5 @@
 ﻿using Business.Abstracts;
+using Business.Dtos.requests.coinRequests;
 using Entities.concretes;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,10 @@ namespace APIs.Controllers
         }
 
         [HttpPost("add")]
-        public ActionResult AddCoin(Coin coin)
+        public ActionResult AddCoin(AddCoinRequest coin)
         {
             _coinService.Add(coin);
-            return Ok();
+            return Ok(coin);
             
         }
         [HttpGet]

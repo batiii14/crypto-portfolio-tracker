@@ -3,6 +3,6 @@
     public class UpdateUserRequest
     {
         public int UserId { get; set; }
-        public int UserName { get; set; }
+        public string UserName { get; set; }
     }
 }

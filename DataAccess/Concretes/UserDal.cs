@@ -10,9 +10,9 @@ namespace DataAccess.Concretes
     {
         public List<User> GetAllWithWallet()
         {
-            using(CoinAppContext context = new CoinAppContext())
+            using (CoinAppContext context = new CoinAppContext())
             {
-                return context.Users.Include(p=>p.Wallet).ToList();
+                return context.Users.Include(p => p.Wallet).Include(p => p.Wallet.CoinList).ToList();
             }
         }
 
@@ -20,7 +20,27 @@ namespace DataAccess.Concretes
         {
             using (CoinAppContext context = new CoinAppContext())
             {
-                return context.Users.Include(p => p.Wallet).Where(p=>p.UserId==id).Single();
+                return context.Users.Include(p => p.Wallet).Where(p => p.UserId == id).Include(p => p.Wallet.CoinList).Single();
+            }
+
+        }
+
+        public bool IsUserExist(int id)
+        {
+
+
+            try
+            {
+                using (CoinAppContext context = new CoinAppContext())
+                {
+                    User user = context.Users.Where(p => p.UserId == id).Single();
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("User is not exist!");
             }
 
         }

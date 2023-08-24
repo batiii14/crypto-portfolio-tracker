@@ -8,5 +8,6 @@ namespace Business.Dtos.requests.coinRequests
 {
     public class AddCoinRequest
     {
+        public string Name { get; set; }
     }
 }

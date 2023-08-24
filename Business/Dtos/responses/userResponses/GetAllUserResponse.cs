@@ -1,4 +1,5 @@
-﻿using Entities.concretes;
+﻿using Business.Dtos.responses.walletResponses;
+using Entities.concretes;
 
 namespace Business.Dtos.responses.userResponses
 {
@@ -10,6 +11,6 @@ namespace Business.Dtos.responses.userResponses
         public string Email { get; set; }
         public string Password { get; set; }
         public string UserName { get; set; }
-        public Wallet? Wallet { get; set; }
+        public GetWalletWithUserResponse Wallet { get; set; }
     }
 }
