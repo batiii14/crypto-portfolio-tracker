@@ -17,6 +17,23 @@ namespace HellNo.Controllers
         {
             return View();
         }
+        public IActionResult Deneme()
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:7284");
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = client.GetAsync("/api/User/add").Result;
+            if (response.IsSuccessStatusCode)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest("Something went wrong");
+            }
+            return View(response);
+        }
 
         public IActionResult Privacy()
         {

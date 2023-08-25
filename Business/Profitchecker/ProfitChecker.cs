@@ -32,8 +32,17 @@ namespace Business.Profitchecker
             double profit = 0;
             double valueOftheWallet = 0;
             double dnm = 0;
-          
 
+            List<string> coinnames= new List<string>();
+            foreach (var coinInWallet in buyingTransactions)
+            {
+                if (!coinnames.Contains(coinInWallet.coinBought.Name))
+                    coinnames.Add(coinInWallet.coinBought.Name);
+            }
+
+
+
+            
             foreach (var coinInWallet in buyingTransactions)
             {
                 
@@ -42,17 +51,27 @@ namespace Business.Profitchecker
                 {
                     if (coinToday.Name == coinInWallet.coinBought.Name)
                     {
-                      
+
                         valueOftheWallet += coinToday.Value * coinInWallet.coinBought.quantity;
-                        
-                        dnm = coinInWallet.coinBought.Value * coinInWallet.coinBought.quantity - (coinToday.Value * coinInWallet.coinBought.quantity);
-                        moneySpentForeachCoin.Add(Math.Abs(dnm));//iki liste de aynı olduğu için bug var. Bitcoin sürekli ekleniyor. Düzelt
+
+
+                        if (coinnames.Contains(coinInWallet.coinBought.Name))
+                        {
+                            dnm =  (coinToday.Value * coinInWallet.coinBought.quantity)- coinInWallet.coinBought.Value * coinInWallet.coinBought.quantity;
+                            moneySpentForeachCoin.Add(dnm);
+                            coinnames.Remove(coinInWallet.coinBought.Name);
+
+                        }
+
+                        //iki liste de aynı olduğu için bug var. Bitcoin sürekli ekleniyor. Düzelt
 
                     }
-
                 }
 
             }
+
+
+            
             profit =   valueOftheWallet- moneySpentOverall;
 
 

@@ -46,28 +46,44 @@ namespace Business.Concretes
                 UpdateWalletRequest updateWalletRequest = new UpdateWalletRequest();
                 updateWalletRequest.WalletId = user.Wallet.WalletId;
                 buyingTransaction.coinBought.WalletId = user.Wallet.WalletId;
-                foreach (var item in user.Wallet.CoinList)
+
+                if (user.Wallet.CoinList.Any(c => c.Name == buyingTransaction.coinBought.Name))
                 {
-                    if (item.Name == buyingTransaction.coinBought.Name)
-                    {
+                    CoinsBought coinBougt =user.Wallet.CoinList.Where(c => c.Name == buyingTransaction.coinBought.Name).Single();
+                    coinBougt.quantity += buyingTransaction.coinBought.quantity;
 
-                        item.quantity += buyingTransaction.coinBought.quantity;
-
-                        _coinsBoughtManager.Update(item.Id, item.quantity);
-                        buyingTransaction.coinBought.Id = item.Id;
-
-
-                    }
-                    else
-                    {
-
-                        user.Wallet.CoinList.Add(buyingTransaction.coinBought);
-                        _coinsBoughtManager.Add(buyingTransaction.coinBought);
-                    }
-
-
+                    _coinsBoughtManager.Update(coinBougt.Id, coinBougt.quantity);
+                    buyingTransaction.coinBought.Id = coinBougt.Id;
 
                 }
+                else
+                {
+                    user.Wallet.CoinList.Add(buyingTransaction.coinBought);
+                    _coinsBoughtManager.Add(buyingTransaction.coinBought);
+                }
+                //foreach (var item in user.Wallet.CoinList)
+                //{
+                //    if (item.Name == buyingTransaction.coinBought.Name)
+                //    {
+
+                //        item.quantity += buyingTransaction.coinBought.quantity;
+
+                //        _coinsBoughtManager.Update(item.Id, item.quantity);
+                //        buyingTransaction.coinBought.Id = item.Id;
+
+
+                //    }
+                //    else
+                //    {
+
+                //        user.Wallet.CoinList.Add(buyingTransaction.coinBought);
+                //        _coinsBoughtManager.Add(buyingTransaction.coinBought);
+                //    }
+
+
+
+                //}
+
 
                 _walletManager.Update(updateWalletRequest);
                 _buyingTransactionDal.Add(buyingTransaction);
