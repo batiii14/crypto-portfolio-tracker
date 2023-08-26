@@ -1,11 +1,6 @@
 ﻿using Business.Abstracts;
 using DataAccess.Abstracts;
 using Entities.concretes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Business.Concretes
 {
@@ -31,7 +26,7 @@ namespace Business.Concretes
 
         public List<CoinsBought> GetAll()
         {
-            throw new NotImplementedException();
+            return _coinsBoughtDal.GetList().ToList();
         }
 
         public CoinsBought GetById(int id)

@@ -14,7 +14,6 @@ namespace Entities.concretes
         public int Id { get; set; }
         public int WalletId { get; set; }
         public String Name { get; set; }
-        public double Value { get; set; }
         public double quantity { get; set; }
     }
 }

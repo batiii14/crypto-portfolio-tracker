@@ -1,7 +1,6 @@
 ﻿using Business.Abstracts;
 using DataAccess.Abstracts;
 using Entities.concretes;
-using System.Linq.Expressions;
 
 namespace Business.Concretes
 {

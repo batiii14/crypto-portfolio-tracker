@@ -1,8 +1,8 @@
 ﻿using Business.Abstracts;
+using Business.Dtos.requests.buyTransactionRequests;
 using Business.Dtos.requests.walletRequests;
 using DataAccess.Abstracts;
 using Entities.concretes;
-using Business.Profitchecker;
 namespace Business.Concretes
 {
     public class BuyingTransactionManager : IBuyingTransactionService
@@ -25,78 +25,45 @@ namespace Business.Concretes
 
         }
 
-        public void AddBuyingTransaction(BuyingTransaction buyingTransaction)
+        public void AddBuyingTransaction(CreateBuyTransactionRequest createBuyingTransaction)
         {
 
-
-
+            BuyingTransaction buyingTransaction = new BuyingTransaction();
+            buyingTransaction.Value = createBuyingTransaction.Value;
+            buyingTransaction.Quantity = createBuyingTransaction.Quantity;
+            buyingTransaction.UserId = createBuyingTransaction.UserId;
+            CoinsBought coin = new CoinsBought();
+            buyingTransaction.coinBought = coin;
+            coin.Name = createBuyingTransaction.CoinName;
+            //check if user exist
             bool ısUserExist = _userDal.IsUserExist(buyingTransaction.UserId);
             User user = new User();
             user = _userDal.GetWithWallet(buyingTransaction.UserId);
             bool isWalletExist = _walletManager.IsWalletExist(user.Wallet.WalletId);
-            Wallet usersWallet = user.Wallet;
+
             try
             {
-                //if (user != null)
-                //{
-
-
-                //if(user.Wallet != null)
-                //{
                 UpdateWalletRequest updateWalletRequest = new UpdateWalletRequest();
                 updateWalletRequest.WalletId = user.Wallet.WalletId;
                 buyingTransaction.coinBought.WalletId = user.Wallet.WalletId;
 
-                if (user.Wallet.CoinList.Any(c => c.Name == buyingTransaction.coinBought.Name))
+
+                if (user.Wallet.CoinList.Any(c => c.Name == createBuyingTransaction.CoinName))
                 {
-                    CoinsBought coinBougt =user.Wallet.CoinList.Where(c => c.Name == buyingTransaction.coinBought.Name).Single();
-                    coinBougt.quantity += buyingTransaction.coinBought.quantity;
-
-                    _coinsBoughtManager.Update(coinBougt.Id, coinBougt.quantity);
-                    buyingTransaction.coinBought.Id = coinBougt.Id;
-
+                    CoinsBought coinToUpdate = user.Wallet.CoinList.Where(c => c.Name == createBuyingTransaction.CoinName).Single();
+                    buyingTransaction.coinBought=coinToUpdate;
+                    _coinsBoughtManager.Update(coinToUpdate.Id, coinToUpdate.quantity);
                 }
                 else
                 {
+                    coin.quantity = createBuyingTransaction.Quantity;
                     user.Wallet.CoinList.Add(buyingTransaction.coinBought);
                     _coinsBoughtManager.Add(buyingTransaction.coinBought);
+
                 }
-                //foreach (var item in user.Wallet.CoinList)
-                //{
-                //    if (item.Name == buyingTransaction.coinBought.Name)
-                //    {
-
-                //        item.quantity += buyingTransaction.coinBought.quantity;
-
-                //        _coinsBoughtManager.Update(item.Id, item.quantity);
-                //        buyingTransaction.coinBought.Id = item.Id;
-
-
-                //    }
-                //    else
-                //    {
-
-                //        user.Wallet.CoinList.Add(buyingTransaction.coinBought);
-                //        _coinsBoughtManager.Add(buyingTransaction.coinBought);
-                //    }
-
-
-
-                //}
-
 
                 _walletManager.Update(updateWalletRequest);
                 _buyingTransactionDal.Add(buyingTransaction);
-                //}
-                //else
-                //{
-                //    throw new Exception("Wallet for this user couldn't found!");
-                //}
-                //}
-                //else
-                //{
-                //    throw new Exception("User couldn't found!");
-                //}
 
             }
             catch (Exception e)
@@ -106,57 +73,59 @@ namespace Business.Concretes
             }
 
 
-            //Wallet? wallet = new Wallet()
+            //BuyingTransaction buyingTransaction1 = new BuyingTransaction();
+            //buyingTransaction1.Value = createBuyingTransaction.Value;
+            //buyingTransaction1.UserId = createBuyingTransaction.UserId;
+            //buyingTransaction1.Quantity = createBuyingTransaction.Quantity;
+
+            //coin.Name = createBuyingTransaction.CoinName;
+
+
+            //coin.WalletId = user.Wallet.WalletId;
+            //buyingTransaction1.coinBought = coin;
+            //Wallet usersWallet = user.Wallet;
+            //try
             //{
-            //    WalletId = user.Wallet.WalletId,
-            //    CoinList=user.Wallet.CoinList,
-            //    User=user,
-            //    UserId=user.UserId
-            //};
-            //CoinsBought coin = buyingTransaction.coinBought;
-            //List<CoinsBought> coinsBoughtList= new List<CoinsBought>();
-            //if (wallet.CoinList==null||wallet.CoinList.Count()==0)
-            //{
-            //    coin.WalletId = user.Wallet.WalletId;
-            //    coin.Value= _coinUpdaterManager.GetCoinValueFromApi(coin.Name).Result;
-            //    user.Wallet.CoinList.Add(coin);
-            //    _userDal.Update(user);
-            //    coinsBoughtList.Add(coin);
-            //    _coinsBoughtManager.Add(coin);
-            //}
-            //else
-            //{
-            //    foreach (var item in wallet.CoinList)
+
+            //    UpdateWalletRequest updateWalletRequest = new UpdateWalletRequest();
+            //    updateWalletRequest.WalletId = user.Wallet.WalletId;
+
+            //    //buyingTransaction1.coinBought.WalletId = user.Wallet.WalletId;
+
+            //    if (user.Wallet.CoinList.Any(c => c.Name == createBuyingTransaction.CoinName))
             //    {
-            //        if (item.Name == coin.Name)
-            //        {
-            //            item.Value = _coinUpdaterManager.GetCoinValueFromApi(item.Name).Result;
-            //            item.quantity += coin.quantity;
-            //            coinsBoughtList.Add(coin);
+            //        coin =user.Wallet.CoinList.Where(c => c.Name == createBuyingTransaction.CoinName).Single();
+            //        coin.quantity += buyingTransaction1.Quantity;
+
+            //        //buyingTransaction1.coinBought = _coinsBoughtManager.GetAll().Where(c => c.Name == createBuyingTransaction.CoinName).Single();
+            //        _coinsBoughtManager.Update(coin.Id, coin.quantity);
 
 
-            //        }
-            //        else
-            //        {
-            //            coinsBoughtList.Add(coin);
-            //            _coinsBoughtManager.Add(coin);
 
-            //        }
 
 
             //    }
+            //    else
+            //    {
+            //        coin.quantity=createBuyingTransaction.Quantity;
+            //        user.Wallet.CoinList.Add(buyingTransaction1.coinBought);
+            //        _coinsBoughtManager.Add(buyingTransaction1.coinBought);
+            //    }
+
+
+
+            //    _walletManager.Update(updateWalletRequest);
+            //    _buyingTransactionDal.Add(buyingTransaction1);
+
 
             //}
-
-            //UpdateWalletRequest upt = new UpdateWalletRequest()
+            //catch (Exception e)
             //{
-            //    WalletId = wallet.WalletId,
-            //    coins = wallet.CoinList
 
-            //};
-            //_walletManager.Update(upt);
+            //    throw new Exception(e.Message);
+            //}
 
-            //_buyingTransactionDal.Add(buyingTransaction);
+
         }
 
         public void Delete(int id)
@@ -173,8 +142,8 @@ namespace Business.Concretes
         public List<BuyingTransaction> GetAllForSpecificUser(int id)
         {
 
-            return _buyingTransactionDal.GetBuyingTransactionWithCoin().Where(p=>p.UserId == id).ToList();
-            
+            return _buyingTransactionDal.GetBuyingTransactionWithCoin().Where(p => p.UserId == id).ToList();
+
 
         }
 

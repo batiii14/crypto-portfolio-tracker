@@ -10,20 +10,20 @@ namespace Business.Profitchecker
         ICoinService _coinService;
         IUserService _userService;
 
-        public ProfitChecker(IUserService userService,IBuyingTransactionService buyingTransactionService,ICoinService coinService)
+        public ProfitChecker(IUserService userService, IBuyingTransactionService buyingTransactionService, ICoinService coinService)
         {
-            _userService=userService;
+            _userService = userService;
             _buyingTransactionService = buyingTransactionService;
             _coinService = coinService;
-                
+
         }
 
         public ProfitForPortfolio ShowMeUsersProfit(int userId)
         {
             ProfitForPortfolio profitForPortfolio = new ProfitForPortfolio();
 
-            GetUserByIdResponse user= new GetUserByIdResponse();
-            user= _userService.GetById(userId);
+            GetUserByIdResponse user = new GetUserByIdResponse();
+            user = _userService.GetById(userId);
             IList<Coin> coins = _coinService.GetAllCoin();
             List<double> moneySpentForeachCoin = new List<double>();
 
@@ -31,35 +31,38 @@ namespace Business.Profitchecker
             double moneySpentOverall = 0;
             double profit = 0;
             double valueOftheWallet = 0;
-            double dnm = 0;
+            double eachCoinsValue = 0;
 
-            List<string> coinnames= new List<string>();
+            List<string> coinNames = new List<string>();
             foreach (var coinInWallet in buyingTransactions)
             {
-                if (!coinnames.Contains(coinInWallet.coinBought.Name))
-                    coinnames.Add(coinInWallet.coinBought.Name);
+
+                moneySpentOverall += coinInWallet.Value * coinInWallet.Quantity;
+
+                if (!coinNames.Contains(coinInWallet.coinBought.Name))
+                    coinNames.Add(coinInWallet.coinBought.Name);
             }
 
 
 
-            
+
             foreach (var coinInWallet in buyingTransactions)
             {
-                
-                moneySpentOverall += coinInWallet.coinBought.Value * coinInWallet.coinBought.quantity;// bu zamana kadar portfolyo için harcanan toplam para
+
+                /*coinInWallet.coinBought.quantity;*/// bu zamana kadar portfolyo için harcanan toplam para
                 foreach (var coinToday in coins)
                 {
                     if (coinToday.Name == coinInWallet.coinBought.Name)
                     {
 
-                        valueOftheWallet += coinToday.Value * coinInWallet.coinBought.quantity;
+                        valueOftheWallet += coinToday.Value * coinInWallet.Quantity; /*coinInWallet.coinBought.quantity;*/
 
 
-                        if (coinnames.Contains(coinInWallet.coinBought.Name))
+                        if (coinNames.Contains(coinInWallet.coinBought.Name))
                         {
-                            dnm =  (coinToday.Value * coinInWallet.coinBought.quantity)- coinInWallet.coinBought.Value * coinInWallet.coinBought.quantity;
-                            moneySpentForeachCoin.Add(dnm);
-                            coinnames.Remove(coinInWallet.coinBought.Name);
+                            eachCoinsValue = (coinToday.Value * coinInWallet.coinBought.quantity) - coinInWallet.Value * coinInWallet.coinBought.quantity;
+                            moneySpentForeachCoin.Add(eachCoinsValue);
+                            coinNames.Remove(coinInWallet.coinBought.Name);
 
                         }
 
@@ -71,8 +74,8 @@ namespace Business.Profitchecker
             }
 
 
-            
-            profit =   valueOftheWallet- moneySpentOverall;
+
+            profit = valueOftheWallet - moneySpentOverall;
 
 
 
@@ -82,7 +85,7 @@ namespace Business.Profitchecker
         }
 
 
-        
+
     }
 }
 

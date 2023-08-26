@@ -18,7 +18,7 @@ namespace APIs.Controllers
 
 
         [HttpPost("add")]
-        public ActionResult CreateBuyingTransaction(BuyingTransaction buyingTransaction)
+        public ActionResult CreateBuyingTransaction(CreateBuyTransactionRequest buyingTransaction)
         {
             _buyingTransactionService.AddBuyingTransaction(buyingTransaction);
             return Ok(buyingTransaction);

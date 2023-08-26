@@ -11,13 +11,14 @@ namespace Business.Concretes
         private ICoinDal _coinDal;
         private ICoinUpdaterService _coinUpdaterService;
 
-        public CoinManager(ICoinDal coinDal, ICoinUpdaterService coinUpdaterService) {
+        public CoinManager(ICoinDal coinDal, ICoinUpdaterService coinUpdaterService)
+        {
             _coinDal = coinDal;
             _coinUpdaterService = coinUpdaterService;
         }
         public void Add(AddCoinRequest entity)
         {
-            Coin coin   = new Coin();
+            Coin coin = new Coin();
             coin.Name = entity.Name;
 
             coin.Value = _coinUpdaterService.GetCoinValueFromApi(entity.Name).Result;
@@ -27,7 +28,7 @@ namespace Business.Concretes
                 {
                     throw new Exception("Coin is already exist.");
                 }
-                
+
             }
             _coinDal.Add(coin);
         }
@@ -53,11 +54,11 @@ namespace Business.Concretes
             return _coinDal.GetList().ToList();
         }
 
-        public void Update(int id,double value)
+        public void Update(int id, double value)
         {
-            Coin coin = _coinDal.Get(p=>p.Id==id);
+            Coin coin = _coinDal.Get(p => p.Id == id);
             coin.Value = value;
-            _coinDal.Update(coin);    
+            _coinDal.Update(coin);
         }
     }
 }

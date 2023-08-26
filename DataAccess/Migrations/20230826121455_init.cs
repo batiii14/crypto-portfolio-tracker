@@ -56,27 +56,6 @@ namespace DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SellingTransactions",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    coinId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<double>(type: "float", nullable: false),
-                    SellingPrice = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SellingTransactions", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SellingTransactions_Coins_coinId",
-                        column: x => x.coinId,
-                        principalTable: "Coins",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Wallets",
                 columns: table => new
                 {
@@ -103,7 +82,6 @@ namespace DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     WalletId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Value = table.Column<double>(type: "float", nullable: false),
                     quantity = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
@@ -124,7 +102,9 @@ namespace DataAccess.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
-                    coinBoughtId = table.Column<int>(type: "int", nullable: false)
+                    coinBoughtId = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<double>(type: "float", nullable: false),
+                    Quantity = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,6 +112,27 @@ namespace DataAccess.Migrations
                     table.ForeignKey(
                         name: "FK_BuyingTransactions_coinsBoughts_coinBoughtId",
                         column: x => x.coinBoughtId,
+                        principalTable: "coinsBoughts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SellingTransactions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    coinId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<double>(type: "float", nullable: false),
+                    SellingPrice = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SellingTransactions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SellingTransactions_coinsBoughts_coinId",
+                        column: x => x.coinId,
                         principalTable: "coinsBoughts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -166,6 +167,9 @@ namespace DataAccess.Migrations
                 name: "BuyingTransactions");
 
             migrationBuilder.DropTable(
+                name: "Coins");
+
+            migrationBuilder.DropTable(
                 name: "CoinUpdaters");
 
             migrationBuilder.DropTable(
@@ -173,9 +177,6 @@ namespace DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "coinsBoughts");
-
-            migrationBuilder.DropTable(
-                name: "Coins");
 
             migrationBuilder.DropTable(
                 name: "Wallets");

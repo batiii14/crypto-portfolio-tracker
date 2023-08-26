@@ -29,8 +29,14 @@ namespace DataAccess.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("Quantity")
+                        .HasColumnType("float");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("float");
 
                     b.Property<int>("coinBoughtId")
                         .HasColumnType("int");
@@ -93,9 +99,6 @@ namespace DataAccess.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("float");
 
                     b.Property<int>("WalletId")
                         .HasColumnType("int");
@@ -208,7 +211,7 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("Entities.concretes.SellingTransaction", b =>
                 {
-                    b.HasOne("Entities.concretes.Coin", "coin")
+                    b.HasOne("Entities.concretes.CoinsBought", "coin")
                         .WithMany()
                         .HasForeignKey("coinId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -7,7 +7,9 @@ namespace Entities.concretes
         public int Id { get; set; }
         public int UserId { get; set; }
         public CoinsBought coinBought { get; set; }
-     
+        public double Value { get; set; }
+        public double Quantity { get; set; }
+
 
     }
 }
